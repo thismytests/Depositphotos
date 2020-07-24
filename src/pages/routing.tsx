@@ -55,11 +55,8 @@ export default () => {
           {/*routes*/}
           <Switch>
             <Route path={routes.atm.url} component={ATM}/>
-
             <Route exact path='/' component={ATM}/>
             <Route path="*" component={NotFoundPage}/>
-
-            {/*<Redirect to={routes.teams.url}/>*/}
           </Switch>
         </Grid>
         <Grid item xs={2}></Grid>
