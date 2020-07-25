@@ -60,7 +60,7 @@ export default function AtmGettingBlock(
       <Grid container spacing={3} alignItems="center">
 
         {/*INPUT FIELD*/}
-        <Grid item xs={12}>
+        <Grid item xs={9}>
           {locale.INPUT_FIELD}
           <TextField
             fullWidth
@@ -70,6 +70,16 @@ export default function AtmGettingBlock(
             variant="outlined"
             type="date"
           />
+        </Grid>
+
+
+        {/*GETTING BUTTON*/}
+        <Grid item xs={3}>
+          <Button color="secondary"
+                  type="submit">
+
+            {locale.GET}
+          </Button>
         </Grid>
 
         {/*OUTPUT FIELD*/}
@@ -84,12 +94,6 @@ export default function AtmGettingBlock(
             type="date"
           />
         </Grid>
-
-        {/*GETTING BUTTON*/}
-        <Button color="secondary"
-                type="submit">
-          {locale.GET}
-        </Button>
 
         {/*  error code*/}
         {errorCode && (

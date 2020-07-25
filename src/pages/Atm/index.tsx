@@ -43,16 +43,20 @@ export default function ATM(props: RouteComponentProps) {
 
   return (
     <Grid container item xs={12}>
-      <Grid item container xs={12} className={classes.item}>
-        ATM will be here
-        <AtmGettingBlock {...atbGettingProps}/>
-        <Grid item xs={12}>
-          <Divider/>
-        </Grid>
-        <Divider/>
+      {/*setting block*/}
+      <Grid item xs={12} className={classes.item}>
         <AtmSettingBlock {...atbSettingProps}/>
       </Grid>
 
+      {/*devider*/}
+      <Grid item xs={12} className={classes.item}>
+        <AtmGettingBlock {...atbGettingProps}/>
+      </Grid>
+
+      {/*getting block*/}
+      <Grid item xs={12} className={classes.item}>
+        <Divider/>
+      </Grid>
     </Grid>
   )
 }

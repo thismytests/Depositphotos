@@ -53,7 +53,7 @@ export default function AtmSettingBlock(
       <Grid container spacing={3} alignItems="center">
 
         {/*INPUT FIELD*/}
-        <Grid item xs={12}>
+        <Grid item xs={9}>
           {locale.AVAILABLE_BILLS}
           <TextField
             fullWidth
@@ -67,10 +67,13 @@ export default function AtmSettingBlock(
 
 
         {/*SETTING BUTTONS*/}
-        <Button color="secondary"
-                type="submit">
-          {locale.SAVE}
-        </Button>
+        <Grid item xs={3}>
+          <Button color="secondary"
+                  type="submit">
+            {locale.SAVE}
+          </Button>
+        </Grid>
+
 
         {/*  error code*/}
         {errorCode && (
