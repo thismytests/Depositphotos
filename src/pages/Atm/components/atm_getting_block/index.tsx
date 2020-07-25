@@ -17,7 +17,7 @@ import {locale} from './locale';
 import formValidation from './formValidation';
 
 // types
-import {FormProps} from './types';
+import {ComponentProps} from './types';
 
 
 const FORMS_NAMES: {
@@ -33,7 +33,7 @@ export default function AtmGettingBlock(
   {
     onSubmit,
     errorCode
-  }: FormProps) {
+  }: ComponentProps) {
 
 
   const initialFormValues = {
