@@ -1,7 +1,7 @@
 import React from 'react';
 
 // formik
-import {Form, Formik} from 'formik';
+import {useFormik} from 'formik';
 
 
 // material ui
@@ -14,7 +14,7 @@ import Button from "@material-ui/core/Button";
 import {locale} from './locale';
 
 // form validation
-import formValidation from './formValidation';
+import formValidationSchema from './formValidation';
 
 // types
 import {ComponentProps} from './types';
@@ -35,86 +35,69 @@ export default function AtmGettingBlock(
     errorCode
   }: ComponentProps) {
 
+  const formik = useFormik({
+    initialValues: {
+      [FORMS_NAMES.INPUT_FIELD]: ''
+    },
+    validationSchema: {formValidationSchema},
+    onSubmit: values => {
+      const {inputField} = values;
+      const {outputField} = values;
 
-  const initialFormValues = {
-    [FORMS_NAMES.INPUT_FIELD]: ''
-  };
+      const formData: {
+        inputField: string;
+        outputField: string;
+      } = {
+        inputField,
+        outputField
+      };
 
+      return onSubmit(formData).finally(() => values);
+    },
+  });
   return (
-    <Formik
-      initialValues={initialFormValues}
-      validationSchema={formValidation}
-      isInitialValid={formValidation.isValidSync(initialFormValues)}
-      onSubmit={(input, actions) => {
-        actions.setSubmitting(true);
+    <form onSubmit={formik.handleSubmit}>
+      <Grid container spacing={3} alignItems="center">
 
-        const {inputField} = input;
-        const {outputField} = input;
+        {/*INPUT FIELD*/}
+        <Grid item xs={12}>
+          {locale.INPUT_FIELD}
+          <TextField
+            fullWidth
+            name={FORMS_NAMES.INPUT_FIELD}
+            onChange={formik.handleChange}
+            id={FORMS_NAMES.INPUT_FIELD}
+            variant="outlined"
+            type="date"
+          />
+        </Grid>
 
-        const formData: {
-          inputField: string;
-          outputField: string;
-        } = {
-          inputField,
-          outputField
-        };
+        {/*OUTPUT FIELD*/}
+        <Grid item xs={12}>
+          {locale.OUTPUT_FIELD}
+          <TextField
+            fullWidth
+            name={FORMS_NAMES.OUTPUT_FIELD}
+            onChange={formik.handleChange}
+            id={FORMS_NAMES.OUTPUT_FIELD}
+            variant="outlined"
+            type="date"
+          />
+        </Grid>
 
-        return onSubmit(formData).finally(() => actions.setSubmitting(false));
-      }}
-    >
-      {({values}) => (
-        <Form>
-          <Grid container spacing={3} alignItems="center">
+        {/*GETTING BUTTON*/}
+        <Button color="secondary"
+                type="submit">
+          {locale.GET}
+        </Button>
 
-            {/*Title*/}
-            <Grid item xs={12}>
-              {locale.INPUT_FIELD}
-              <TextField
-                fullWidth
-                name={FORMS_NAMES.INPUT_FIELD}
-                id={FORMS_NAMES.INPUT_FIELD}
-                variant="outlined"
-                type="date"
-              />
-            </Grid>
-
-            {/*Title*/}
-            <Grid item xs={12}>
-              {locale.OUTPUT_FIELD}
-              <TextField
-                fullWidth
-                name={FORMS_NAMES.OUTPUT_FIELD}
-                id={FORMS_NAMES.OUTPUT_FIELD}
-                variant="outlined"
-                type="date"
-              />
-            </Grid>
-            {/*birthday name*/}
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                name={FORMS_NAMES.INPUT_FIELD}
-                id={FORMS_NAMES.INPUT_FIELD}
-                variant="outlined"
-                type="date"
-              />
-            </Grid>
-
-            {/*submit button*/}
-            <Button color="secondary"
-                    type="submit">
-              {locale.GET}
-            </Button>
-
-            {/*  error code*/}
-            {errorCode && (
-              <Grid item xs={12}>
-                <Typography color="error">{errorCode}</Typography>
-              </Grid>
-            )}
+        {/*  error code*/}
+        {errorCode && (
+          <Grid item xs={12}>
+            <Typography color="error">{errorCode}</Typography>
           </Grid>
-        </Form>
-      )}
-    </Formik>
-  );
+        )}
+      </Grid>
+    </form>
+  )
 }
