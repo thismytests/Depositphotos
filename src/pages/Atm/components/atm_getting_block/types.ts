@@ -1,4 +1,4 @@
-export interface FormProps {
+export interface ComponentProps {
   onSubmit: (params: FormData) => Promise<void>;
   errorCode: string;
 }

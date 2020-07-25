@@ -8,7 +8,7 @@ import {Grid} from '@material-ui/core';
 import AtmGettingBlock from './components/atm_getting_block';
 
 // types
-import {FormProps, FormData} from './components/atm_getting_block/types';
+import {ComponentProps, FormData} from './components/atm_getting_block/types';
 
 // styles
 import {useStyles} from './styles';
@@ -16,7 +16,7 @@ import {useStyles} from './styles';
 export default function ATM(props: RouteComponentProps) {
   const classes = useStyles();
 
-  const atbGettingForm: FormProps = {
+  const atbGettingForm: ComponentProps = {
     onSubmit: function (data: FormData) {
       console.log('ATM component ', data);
       return Promise.resolve() as Promise<any>;
