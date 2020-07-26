@@ -37,7 +37,7 @@ const convertObjToString = (obj: { [key: string]: number }): string => {
   let result = '';
 
   for (let key in obj) {
-    result = result.concat(key + SEPARATOR + obj[key])
+    result = result.concat(key + SEPARATOR + obj[key] + ' ')
   }
   return result;
 };
@@ -56,7 +56,7 @@ export function isValidBanknotes(testedStr: string): boolean {
   return result;
 }
 
-export function getMoney(banknotes: Array<number>, sum: number): string {
+export function getMoney(banknotes: Array<number>, sum: number): {[key: string]: string} {
   const banknotesSum = getArrSum(banknotes);
 
   if (banknotesSum > sum) {
@@ -71,6 +71,7 @@ export function getMoney(banknotes: Array<number>, sum: number): string {
     if (current === minBanknote) {
       return sum;
     }
+
     objResult[current.toString()] = 1;
     return sum - current;
   }, banknotesSum);
@@ -78,5 +79,5 @@ export function getMoney(banknotes: Array<number>, sum: number): string {
   // set count for smaller banknote
   objResult[minBanknote] = sumForLasBanknote / minBanknote;
 
-  return convertObjToString(objResult);
+  return objResult;
 }
