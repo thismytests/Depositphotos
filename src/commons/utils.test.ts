@@ -63,7 +63,7 @@ describe('To get banknotes', () => {
       const BANKNOTES = [10, 50, 100];
       const GOOD_SUM = 170;
 
-      expect(getMoney(BANKNOTES, GOOD_SUM)).toBe({10: 2, 50: 1, 100: 1});
+      expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 2, 50: 1, 100: 1});
     });
   });
 

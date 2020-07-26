@@ -56,7 +56,7 @@ export function isValidBanknotes(testedStr: string): boolean {
   return result;
 }
 
-export function getMoney(banknotes: Array<number>, sum: number): {[key: string]: string} {
+export function getMoney(banknotes: Array<number>, sum: number): {[key: string]: number} {
   const banknotesSum = getArrSum(banknotes);
 
   if (banknotesSum > sum) {
@@ -77,7 +77,7 @@ export function getMoney(banknotes: Array<number>, sum: number): {[key: string]:
   }, banknotesSum);
 
   // set count for smaller banknote
-  objResult[minBanknote] = sumForLasBanknote / minBanknote;
+  objResult[minBanknote] = (sumForLasBanknote / minBanknote) + 1;
 
   return objResult;
 }
