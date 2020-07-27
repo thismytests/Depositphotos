@@ -1,14 +1,14 @@
 import {
   isValidBanknotes,
   getMoney
-} from '../pages/Atm/components/atm_setting_block/utils';
+} from './utils';
 
 describe('The banknotes in string are valid if:', () => {
   test(`The banknote is: '10'`, () => {
     const RIGHT_TESTED_STR = '10';
     const WRONG_TESTED_STR = '101';
 
-    // expect(isValidBanknotes(RIGHT_TESTED_STR)).toBe(true);
+    expect(isValidBanknotes(RIGHT_TESTED_STR)).toBe(true);
     expect(isValidBanknotes(WRONG_TESTED_STR)).toBe(false);
   });
 

@@ -23,11 +23,7 @@ const getArrSum = (arr: Array<number>) => {
 const orderArrayByDesc = (arr: Array<number>): Array<number> => {
   const copyArr = arr.slice(0);
 
-  copyArr.sort((a, b) => {
-    if (a < b) return 1;
-    if (a == b) return 0;
-    if (a > b) return -1;
-  });
+  copyArr.sort((a, b) => a - b);
 
   return copyArr;
 };

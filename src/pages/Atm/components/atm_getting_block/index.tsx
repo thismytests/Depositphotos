@@ -32,7 +32,7 @@ const FORMS_NAMES: {
 export default function AtmGettingBlock(
   {
     onSubmit,
-    errorCode
+    errorName
   }: ComponentProps) {
 
   const formik = useFormik({
@@ -96,9 +96,9 @@ export default function AtmGettingBlock(
         </Grid>
 
         {/*  error code*/}
-        {errorCode && (
+        {errorName && (
           <Grid item xs={12}>
-            <Typography color="error">{errorCode}</Typography>
+            <Typography color="error">{errorName}</Typography>
           </Grid>
         )}
       </Grid>

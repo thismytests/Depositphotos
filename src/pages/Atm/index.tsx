@@ -30,7 +30,7 @@ export default function ATM(props: RouteComponentProps) {
       console.log('ATM getting ', data);
       return Promise.resolve() as Promise<any>;
     },
-    errorCode: ''
+    errorName: ''
   };
 
   const atbSettingProps: AtmSettingProps = {
@@ -49,6 +49,11 @@ export default function ATM(props: RouteComponentProps) {
       </Grid>
 
       {/*devider*/}
+      <Grid item xs={12} className={classes.item}>
+        <Divider/>
+      </Grid>
+
+      {/*getting block*/}
       <Grid item xs={12} className={classes.item}>
         <AtmGettingBlock {...atbGettingProps}/>
       </Grid>

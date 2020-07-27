@@ -1,6 +1,6 @@
 export interface ComponentProps {
   onSubmit: (params: FormData) => Promise<void>;
-  errorCode: string;
+  errorName: boolean | string;
 }
 
 export interface FormData {
