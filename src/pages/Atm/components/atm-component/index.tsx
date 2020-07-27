@@ -13,9 +13,8 @@ import Button from "@material-ui/core/Button";
 // locale
 import {locale} from './locale';
 
-// types
-import {ComponentProps} from './types';
-import {getMoney, isValidBanknotes} from "../../commons/utils";
+// utils
+import {convertObjToString, getMoney, isValidBanknotes} from '../../commons/utils';
 
 
 const FORMS_NAMES: {
@@ -27,20 +26,18 @@ const FORMS_NAMES: {
 };
 
 
-export default function AtmGettingBlock({errorName}: ComponentProps) {
+export default function AtmGettingBlock() {
   const [banknotes, setBanknotes] = useState<string>('');
-  const [isUseSettings, setIsUseSettings] = useState<boolean>();
+  const [isUseSettings, setIsUseSettings] = useState<boolean>(true);
 
-  const [isErrorOnGettingMoney, setIsErrorOnGettingMoney] = useState<boolean>(false);
   const [isErrorOnSettingBanknotes, setIsErrorOnSettingBanknotes] = useState<boolean>(false);
-
+  const [gettingSum, setGettingSum] = useState<string>('');
   const handlerSettingChanges = (evt: any) => {
     setBanknotes(evt.target?.value);
   };
 
   const onSaveSettings = () => {
     if (isValidBanknotes(banknotes)) {
-      console.log('banknotes ', banknotes);
       setIsUseSettings(false);
       setIsErrorOnSettingBanknotes(false);
     } else {
@@ -54,24 +51,14 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
     },
     onSubmit: values => {
       const {inputField} = values;
-      const {outputField} = values;
 
-      const formData: {
-        inputField: string;
-        outputField: string;
-      } = {
-        inputField,
-        outputField
-      };
-
-      if(!isErrorOnSettingBanknotes) {
+      if (!isErrorOnSettingBanknotes) {
         const money = getMoney(
           banknotes.split(' ').map(Number),
           +inputField
         );
-        console.log('money ', money);
+        setGettingSum(convertObjToString(money));
       }
-      // return onSubmit(formData).finally(() => values);
     },
   });
 
@@ -104,23 +91,14 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
             {locale.SAVE}
           </Button>
         </Grid>
-
-
-        {/*  error code*/}
-
-        {/*{errorCode && (
-          <Grid item xs={12}>
-            <Typography color="error">{errorCode}</Typography>
-          </Grid>
-        )}*/}
       </Grid>
+
       {/*getting money*/}
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3} alignItems="center">
 
           {/*INPUT FIELD*/}
           <Grid item xs={9}>
-            {locale.INPUT_FIELD}
             <TextField
               fullWidth
               name={FORMS_NAMES.INPUT_FIELD}
@@ -130,7 +108,6 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
             />
           </Grid>
 
-
           {/*GETTING BUTTON*/}
           <Grid item xs={3}>
             <Button color="secondary"
@@ -139,22 +116,9 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
             </Button>
           </Grid>
 
-          {/*OUTPUT FIELD*/}
-          <Grid item xs={12}>
-            {locale.OUTPUT_FIELD}
-            <TextField
-              fullWidth
-              name={FORMS_NAMES.OUTPUT_FIELD}
-              onChange={formik.handleChange}
-              id={FORMS_NAMES.OUTPUT_FIELD}
-              variant="outlined"
-            />
-          </Grid>
-
-          {/*  error code*/}
-          {errorName && (
+          {isUseSettings && (
             <Grid item xs={12}>
-              <Typography color="error">{errorName}</Typography>
+              <Typography color="error">{gettingSum}</Typography>
             </Grid>
           )}
         </Grid>

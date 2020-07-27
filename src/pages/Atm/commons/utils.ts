@@ -28,7 +28,7 @@ const orderArrayByDesc = (arr: Array<number>): Array<number> => {
   return copyArr;
 };
 
-const convertObjToString = (obj: { [key: string]: number }): string => {
+export const convertObjToString = (obj: { [key: string]: number }): string => {
   const SEPARATOR = '/';
   let result = '';
 
