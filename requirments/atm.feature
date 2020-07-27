@@ -5,6 +5,7 @@ Feature: ATM page
     Given I did't choose any setting for banknote && I entered sum
     Then Default banknote is empty
     Then I got needed sum
+    Then Clear sum
 
   Scenario: I choose  banknote 10 && 50
   && I entered sum 50
