@@ -15,6 +15,7 @@ import {locale} from './locale';
 
 // types
 import {ComponentProps} from './types';
+import {getMoney, isValidBanknotes} from "../../commons/utils";
 
 
 const FORMS_NAMES: {
@@ -27,15 +28,24 @@ const FORMS_NAMES: {
 
 
 export default function AtmGettingBlock({errorName}: ComponentProps) {
-  const [settings, setSettings] = useState<string>();
+  const [banknotes, setBanknotes] = useState<string>('');
   const [isUseSettings, setIsUseSettings] = useState<boolean>();
 
+  const [isErrorOnGettingMoney, setIsErrorOnGettingMoney] = useState<boolean>(false);
+  const [isErrorOnSettingBanknotes, setIsErrorOnSettingBanknotes] = useState<boolean>(false);
+
   const handlerSettingChanges = (evt: any) => {
-    setSettings(evt.target?.value)
+    setBanknotes(evt.target?.value);
   };
 
-  const saveHandleChange = () => {
-
+  const onSaveSettings = () => {
+    if (isValidBanknotes(banknotes)) {
+      console.log('banknotes ', banknotes);
+      setIsUseSettings(false);
+      setIsErrorOnSettingBanknotes(false);
+    } else {
+      setIsErrorOnSettingBanknotes(true);
+    }
   };
 
   const formik = useFormik({
@@ -54,6 +64,13 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
         outputField
       };
 
+      if(!isErrorOnSettingBanknotes) {
+        const money = getMoney(
+          banknotes.split(' ').map(Number),
+          +inputField
+        );
+        console.log('money ', money);
+      }
       // return onSubmit(formData).finally(() => values);
     },
   });
@@ -70,14 +87,18 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
             fullWidth
             onChange={handlerSettingChanges}
             variant="outlined"
-            type="date"
           />
         </Grid>
 
+        {isErrorOnSettingBanknotes && (
+          <Grid item xs={12}>
+            <Typography color="error">{locale.ERROR_ON_SETTING_BANKNOTES}</Typography>
+          </Grid>
+        )}
 
         {/*SETTING BUTTONS*/}
         <Grid item xs={3}>
-          <Button onClick={() => setIsUseSettings(true)}
+          <Button onClick={onSaveSettings}
                   color="secondary"
                   type="submit">
             {locale.SAVE}
@@ -106,7 +127,6 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
               onChange={formik.handleChange}
               id={FORMS_NAMES.INPUT_FIELD}
               variant="outlined"
-              type="date"
             />
           </Grid>
 
@@ -115,7 +135,6 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
           <Grid item xs={3}>
             <Button color="secondary"
                     type="submit">
-
               {locale.GET}
             </Button>
           </Grid>
@@ -129,7 +148,6 @@ export default function AtmGettingBlock({errorName}: ComponentProps) {
               onChange={formik.handleChange}
               id={FORMS_NAMES.OUTPUT_FIELD}
               variant="outlined"
-              type="date"
             />
           </Grid>
 
