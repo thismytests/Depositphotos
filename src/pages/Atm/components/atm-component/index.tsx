@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 // formik
 import {useFormik} from 'formik';
@@ -13,9 +13,6 @@ import Button from "@material-ui/core/Button";
 // locale
 import {locale} from './locale';
 
-// form validation
-import formValidationSchema from './formValidation';
-
 // types
 import {ComponentProps} from './types';
 
@@ -29,17 +26,22 @@ const FORMS_NAMES: {
 };
 
 
-export default function AtmGettingBlock(
-  {
-    onSubmit,
-    errorName
-  }: ComponentProps) {
+export default function AtmGettingBlock({errorName}: ComponentProps) {
+  const [settings, setSettings] = useState<string>();
+  const [isUseSettings, setIsUseSettings] = useState<boolean>();
+
+  const handlerSettingChanges = (evt: any) => {
+    setSettings(evt.target?.value)
+  };
+
+  const saveHandleChange = () => {
+
+  };
 
   const formik = useFormik({
     initialValues: {
       [FORMS_NAMES.INPUT_FIELD]: ''
     },
-    validationSchema: {formValidationSchema},
     onSubmit: values => {
       const {inputField} = values;
       const {outputField} = values;
@@ -52,61 +54,93 @@ export default function AtmGettingBlock(
         outputField
       };
 
-      return onSubmit(formData).finally(() => values);
+      // return onSubmit(formData).finally(() => values);
     },
   });
+
   return (
     <>
-    {/*setting money*/}
-
-    {/*getting money*/}
-    <form onSubmit={formik.handleSubmit}>
+      {/*setting money*/}
       <Grid container spacing={3} alignItems="center">
 
         {/*INPUT FIELD*/}
         <Grid item xs={9}>
-          {locale.INPUT_FIELD}
+          {locale.AVAILABLE_BILLS}
           <TextField
             fullWidth
-            name={FORMS_NAMES.INPUT_FIELD}
-            onChange={formik.handleChange}
-            id={FORMS_NAMES.INPUT_FIELD}
+            onChange={handlerSettingChanges}
             variant="outlined"
             type="date"
           />
         </Grid>
 
 
-        {/*GETTING BUTTON*/}
+        {/*SETTING BUTTONS*/}
         <Grid item xs={3}>
-          <Button color="secondary"
+          <Button onClick={() => setIsUseSettings(true)}
+                  color="secondary"
                   type="submit">
-
-            {locale.GET}
+            {locale.SAVE}
           </Button>
         </Grid>
 
-        {/*OUTPUT FIELD*/}
-        <Grid item xs={12}>
-          {locale.OUTPUT_FIELD}
-          <TextField
-            fullWidth
-            name={FORMS_NAMES.OUTPUT_FIELD}
-            onChange={formik.handleChange}
-            id={FORMS_NAMES.OUTPUT_FIELD}
-            variant="outlined"
-            type="date"
-          />
-        </Grid>
 
         {/*  error code*/}
-        {errorName && (
+
+        {/*{errorCode && (
           <Grid item xs={12}>
-            <Typography color="error">{errorName}</Typography>
+            <Typography color="error">{errorCode}</Typography>
           </Grid>
-        )}
+        )}*/}
       </Grid>
-    </form>
+      {/*getting money*/}
+      <form onSubmit={formik.handleSubmit}>
+        <Grid container spacing={3} alignItems="center">
+
+          {/*INPUT FIELD*/}
+          <Grid item xs={9}>
+            {locale.INPUT_FIELD}
+            <TextField
+              fullWidth
+              name={FORMS_NAMES.INPUT_FIELD}
+              onChange={formik.handleChange}
+              id={FORMS_NAMES.INPUT_FIELD}
+              variant="outlined"
+              type="date"
+            />
+          </Grid>
+
+
+          {/*GETTING BUTTON*/}
+          <Grid item xs={3}>
+            <Button color="secondary"
+                    type="submit">
+
+              {locale.GET}
+            </Button>
+          </Grid>
+
+          {/*OUTPUT FIELD*/}
+          <Grid item xs={12}>
+            {locale.OUTPUT_FIELD}
+            <TextField
+              fullWidth
+              name={FORMS_NAMES.OUTPUT_FIELD}
+              onChange={formik.handleChange}
+              id={FORMS_NAMES.OUTPUT_FIELD}
+              variant="outlined"
+              type="date"
+            />
+          </Grid>
+
+          {/*  error code*/}
+          {errorName && (
+            <Grid item xs={12}>
+              <Typography color="error">{errorName}</Typography>
+            </Grid>
+          )}
+        </Grid>
+      </form>
     </>
   )
-}
+};
