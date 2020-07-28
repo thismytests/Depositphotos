@@ -65,6 +65,13 @@ describe('To get banknotes', () => {
 
       expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 2, 50: 1, 100: 1});
     });
+
+    test(`Test case #3`, () => {
+      const BANKNOTES = [10, 50, 100];
+      const GOOD_SUM = 1000;
+
+      expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 5, 50: 1, 100: 9});
+    });
   });
 
 });

@@ -23,7 +23,7 @@ const getArrSum = (arr: Array<number>) => {
 const orderArrayByDesc = (arr: Array<number>): Array<number> => {
   const copyArr = arr.slice(0);
 
-  copyArr.sort((a, b) => a - b);
+  copyArr.sort((a, b) => b - a);
 
   return copyArr;
 };
@@ -45,35 +45,43 @@ export function isValidBanknotes(testedStr: string): boolean {
 
   strToArr.map((item, i) => {
     if (!isExist(item)) {
-      result =  false
+      result = false
     }
   });
 
   return result;
 }
 
-export function getMoney(banknotes: Array<number>, sum: number): {[key: string]: number} {
+export function getMoney(banknotes: Array<number>, neededSum: number): { [key: string]: number } {
   const banknotesSum = getArrSum(banknotes);
 
-  if (banknotesSum > sum) {
+  if (banknotesSum > neededSum) {
     throw new Error('Sum is more then an entered banknotes')
   }
 
-  const orderedDescArr = orderArrayByDesc(banknotes);
-  const minBanknote = orderedDescArr[orderedDescArr.length - 1];
-  const objResult: { [key: string]: number } = {};
+  let objResult: { [key: string]: number } = {};
 
-  const sumForLasBanknote = orderedDescArr.reduce((sum, current) => {
-    if (current === minBanknote) {
-      return sum;
-    }
 
-    objResult[current.toString()] = 1;
-    return sum - current;
-  }, banknotesSum);
+  const updatedSum: number = orderArrayByDesc(banknotes)
+    .reduce((sum, currentValue, currentIndex, array) => {
+      let currentBanknoteCount: number = Math.floor(neededSum / currentValue);
+      let currentBanknoteSum = currentBanknoteCount * currentValue;
 
-  // set count for smaller banknote
-  objResult[minBanknote] = (sumForLasBanknote / minBanknote) + 1;
+      const arrWithoutCurrentElement = array.slice(currentIndex);
+      // console.log('arrWithoutCurrentElement ', arrWithoutCurrentElement);
+      while (currentBanknoteSum > getArrSum(arrWithoutCurrentElement)) {
+        // console.log(' array', array);
+        // console.log('array.slice(currentIndex)!! ', array.slice(currentIndex));
+        // console.log('getArrSum(array.slice(currentIndex)) ', getArrSum(array.slice(currentIndex)));
+        currentBanknoteCount = currentBanknoteCount - 1;
+        currentBanknoteSum = currentBanknoteCount * currentValue;
+      }
+
+      objResult[currentValue] = currentBanknoteCount;
+      return neededSum - currentBanknoteSum;
+
+    }, neededSum);
+
 
   return objResult;
 }
