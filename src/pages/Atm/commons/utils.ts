@@ -61,24 +61,19 @@ export function getMoney(banknotes: Array<number>, neededSum: number): { [key: s
 
   let objResult: { [key: string]: number } = {};
 
-
   const updatedSum: number = orderArrayByDesc(banknotes)
     .reduce((sum, currentValue, currentIndex, array) => {
       let currentBanknoteCount: number = Math.floor(neededSum / currentValue);
       let currentBanknoteSum = currentBanknoteCount * currentValue;
+      const arrWithoutCurrentElement = array.slice(currentIndex + 1);
 
-      const arrWithoutCurrentElement = array.slice(currentIndex);
-      // console.log('arrWithoutCurrentElement ', arrWithoutCurrentElement);
-      while (currentBanknoteSum > getArrSum(arrWithoutCurrentElement)) {
-        // console.log(' array', array);
-        // console.log('array.slice(currentIndex)!! ', array.slice(currentIndex));
-        // console.log('getArrSum(array.slice(currentIndex)) ', getArrSum(array.slice(currentIndex)));
+      while (getArrSum(arrWithoutCurrentElement) > (sum - currentBanknoteSum)) {
         currentBanknoteCount = currentBanknoteCount - 1;
         currentBanknoteSum = currentBanknoteCount * currentValue;
       }
 
       objResult[currentValue] = currentBanknoteCount;
-      return neededSum - currentBanknoteSum;
+      return sum - currentBanknoteSum;
 
     }, neededSum);
 
