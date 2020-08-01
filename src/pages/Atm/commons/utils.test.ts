@@ -38,9 +38,18 @@ describe('To get banknotes', () => {
     const BAD_SUM = 10;
     const GOOD_SUM = 1000;
 
-    expect(() => getMoney(BANKNOTES, BAD_SUM)).toThrow();
-    expect(() => getMoney(BANKNOTES, GOOD_SUM)).not.toThrow();
+    expect(() => getMoney(BAD_SUM, BANKNOTES )).toThrow();
+    expect(() => getMoney(GOOD_SUM, BANKNOTES)).not.toThrow();
   });
+
+  test(`If the user does not select available banknotes
+    the amount returned must be returned with large banknotes`, () => {
+    const BANKNOTES: Array<number> = [];
+    const GOOD_SUM = 1000;
+
+    expect(getMoney(GOOD_SUM, BANKNOTES)).toEqual({ 100: 10});
+  });
+
 
   describe(`LOGIC FOR THREE BANKNOTES
                   @max_bank - bigger banknote,
@@ -56,21 +65,21 @@ describe('To get banknotes', () => {
       const BANKNOTES = [10, 50, 100];
       const GOOD_SUM = 160;
 
-      expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 1, 50: 1, 100: 1});
+      expect(getMoney(GOOD_SUM, BANKNOTES)).toEqual({10: 1, 50: 1, 100: 1});
     });
 
     test(`Test case #2`, () => {
       const BANKNOTES = [10, 50, 100];
       const GOOD_SUM = 170;
 
-      expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 2, 50: 1, 100: 1});
+      expect(getMoney(GOOD_SUM, BANKNOTES)).toEqual({10: 2, 50: 1, 100: 1});
     });
 
     test(`Test case #3`, () => {
       const BANKNOTES = [10, 50, 100];
       const GOOD_SUM = 1000;
 
-      expect(getMoney(BANKNOTES, GOOD_SUM)).toEqual({10: 5, 50: 1, 100: 9});
+      expect(getMoney(GOOD_SUM, BANKNOTES)).toEqual({10: 5, 50: 1, 100: 9});
     });
   });
 

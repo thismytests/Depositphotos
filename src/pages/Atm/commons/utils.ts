@@ -52,7 +52,9 @@ export function isValidBanknotes(testedStr: string): boolean {
   return result;
 }
 
-export function getMoney(banknotes: Array<number>, neededSum: number): { [key: string]: number } {
+export function getMoney(neededSum: number, banknotes: Array<number> ): { [key: string]: number } {
+  // if banknotes are not choosed
+  // banknotes = Object.values(AvailableBanknotes).map(Number);
   const banknotesSum = getArrSum(banknotes);
 
   if (banknotesSum > neededSum) {

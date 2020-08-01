@@ -54,8 +54,8 @@ export default function AtmGettingBlock() {
 
       if (!isErrorOnSettingBanknotes) {
         const money = getMoney(
-          banknotes.split(' ').map(Number),
-          +inputField
+          +inputField,
+          availableBankotes,
         );
         setGettingSum(convertObjToString(money));
       }
@@ -69,10 +69,10 @@ export default function AtmGettingBlock() {
 
         {/*INPUT FIELD*/}
         <Grid item xs={9}>
-          {locale.AVAILABLE_BILLS}
           <TextField
             fullWidth
             onChange={handlerSettingChanges}
+            placeholder={locale.AVAILABLE_BILLS}
             variant="outlined"
           />
         </Grid>
