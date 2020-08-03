@@ -116,11 +116,9 @@ export default function AtmGettingBlock() {
             </Button>
           </Grid>
 
-          {isUseSettings && (
-            <Grid item xs={12}>
-              <Typography color="error">{gettingSum}</Typography>
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Typography color="error">{gettingSum}</Typography>
+          </Grid>
         </Grid>
       </form>
     </>
