@@ -55,7 +55,7 @@ export default function AtmGettingBlock() {
       if (!isErrorOnSettingBanknotes) {
         const money = getMoney(
           +inputField,
-          availableBankotes,
+          banknotes.split('').map(Number),
         );
         setGettingSum(convertObjToString(money));
       }
