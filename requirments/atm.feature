@@ -1,5 +1,31 @@
 Feature: ATM page
 
+  Scenario Outline: Click Control
+    When I click <controlName>
+    Examples:
+      | controlName   |
+      | Set Banknotes |
+      | Set Sum       |
+    Then I see  <screen>
+    Examples:
+      | screen        |
+      | Set Banknotes |
+      | Set Sum       |
+
+    When I click control 'Execute'
+    And <PreviousControl> was a:
+    Examples:
+      | PreviousControl |
+      | Set Banknotes   |
+      | Get Sum         |
+    And Previous control was a valid
+    Then I see  <screen>
+    Examples:
+      | screen        |
+      | Get Banknotes |
+      | Money         |
+
+
   @test
   Scenario: I did't choose any setting for banknote && I entered sum
     Given I did't choose any setting for banknote && I entered sum
