@@ -1,5 +1,4 @@
-Feature: ATM page
-
+Feature: Atm Controls
   Scenario Outline: Click Control
     When I click <controlName>
     Examples:
@@ -25,6 +24,29 @@ Feature: ATM page
       | Get Banknotes |
       | Money         |
 
+Feature: Atm Set Banknotes screen
+  Background: At screen exit input field
+  Scenario Outline: Enter banknotes trough the space
+    When <Banknote> is
+    Examples:
+      | Banknote |
+      | 10       |
+      | 50       |
+      | 100       |
+    Then Screen is valid
+
+
+    When <Banknote> is
+    Examples:
+      | Banknote |
+      | 101       |
+      | A      |
+    Then See error message in bottom of screen "You can choose only 10, 50, 100 banknotes"
+    Then Screen is not valid
+
+Feature: Atm Get Sum screen
+  Background: \
+  Scenario \
 
   @test
   Scenario: I did't choose any setting for banknote && I entered sum
