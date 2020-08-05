@@ -45,8 +45,11 @@ Feature: Atm Set Banknotes screen
     Then Screen is not valid
 
 Feature: Atm Get Sum screen
-  Background: \
-  Scenario \
+  Background: The screen contains input field
+  Scenario I entered sum 200 and didn't choose any banknotes at Banknotes Screen
+  Scenario I entered sum 200 and have choose before banknotes 10 at Banknotes Screen
+  Scenario I entered sum 200 and choose before banknotes 10 and 50 at Banknotes Screen
+  Scenario I entered sum 200 and choose before banknotes 10 and 50 and 100 at Banknotes Screen
 
   @test
   Scenario: I did't choose any setting for banknote && I entered sum
