@@ -4,4 +4,7 @@ export const useStyles = makeStyles({
   item: {
     padding: '5px',
   },
+  rowPadding: {
+    paddingTop: '50px'
+  }
 });
