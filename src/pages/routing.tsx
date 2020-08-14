@@ -18,7 +18,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {routes} from './config';
 
 // pages
-import ATM from './Atm/components/atm-component';
+import ATM from './Atm';
 
 // not found page
 import NotFoundPage from '../404page';
